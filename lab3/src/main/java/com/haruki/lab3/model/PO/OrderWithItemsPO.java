@@ -2,6 +2,7 @@ package com.haruki.lab3.model.PO;
 
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -13,6 +14,32 @@ import java.util.List;
  */
 @Data
 public class OrderWithItemsPO {
-    private OrdersPO ordersPO;
+    private long id;
+    private long customerId;
+    private long shopId;
+    private String orderSn;
+    private long pid;
+    private String consignee;
+    private long regionId;
+    private String address;
+    private String mobile;
+    private String message;
+    private int orderType;
+    private long couponId;
+    private long couponActivity;
+    private long discountPrice;
+    private long originPrice;
+    private long freightPrice;
+    private long presaleId;
+    private long grouponDiscount;
+    private int rebateNum;
+    private long grouponId;
+    private String shipmentSn;
+    private int state;
+    private int subState;
+    private int beDeleted;
+    private Date gmtCreate;
+    private Date gmtModified;
+    private Date confirmTime;
     private List<OrderItemPO> lineItems;
 }

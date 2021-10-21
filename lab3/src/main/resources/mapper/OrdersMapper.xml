@@ -94,7 +94,7 @@
 
 
 <!--    ??mybatis??select??????-->
-    <resultMap id="MybatisEmbedSelectQueryOrderItems" type="com.haruki.lab3.model.PO.OrderWithItemsPO">
+    <resultMap id="MybatisEmbedSelectQueryOrderItems" type="com.haruki.lab3.model.PO.OrderWithItemsPO" >
         <collection property="lineItems" column="id" javaType="List" ofType="com.haruki.lab3.model.PO.OrderItemPO" select="queryOrderLineItemByOrderId"/>
     </resultMap>
 
