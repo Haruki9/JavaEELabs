@@ -9,9 +9,11 @@ import lombok.Data;
  * Time: 16:37
  * Description：
  */
+
+
 @Data
 public class OrderItemVO {
-    private long goodsSkuId;
     private long quantity;
     private long couponActivity;
+    private long goodsSkuId;
 }

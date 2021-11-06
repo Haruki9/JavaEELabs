@@ -22,6 +22,5 @@ public class NewOrderMQListener implements RocketMQListener<OrderVO> {
     @Override
     public void onMessage(OrderVO orderVO) {
         orderDao.addNewOrders(orderVO);
-        System.out.printf("将订单数据写入数据库。顾客name：%s",orderVO.getConsignee());
     }
 }
