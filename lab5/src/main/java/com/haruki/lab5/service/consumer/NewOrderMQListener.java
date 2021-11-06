@@ -4,6 +4,7 @@ import com.haruki.lab5.dao.OrderDao;
 import com.haruki.lab5.model.VO.OrderVO;
 import org.apache.rocketmq.spring.annotation.RocketMQMessageListener;
 import org.apache.rocketmq.spring.core.RocketMQListener;
+import org.apache.tomcat.jni.Time;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,8 +20,11 @@ import org.springframework.stereotype.Component;
 public class NewOrderMQListener implements RocketMQListener<OrderVO> {
     @Autowired
     private OrderDao orderDao;
+    private int count=0;
     @Override
     public void onMessage(OrderVO orderVO) {
         orderDao.addNewOrders(orderVO);
+        count++;
+        if (count%20==0)System.out.println(Time.now());
     }
 }
