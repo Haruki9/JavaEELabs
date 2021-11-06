@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.haruki.lab4.mapper.OrdersMapper">
+
+<!--    ??id????-->
+    <select id="queryFullOrderInfoById" resultType="com.haruki.lab4.model.PO.OrdersPO">
+        select *
+        from orders
+        where id=#{id}
+    </select>
+
+<!--    ??id??????-->
+    <select id="queryOrderLineItemByOrderId" resultType="com.haruki.lab4.model.PO.OrderItemPO">
+        select *
+        from  order_item
+        where order_id=#{id}
+    </select>
+
+
+    <resultMap id="OrderItems" type="com.haruki.lab4.model.PO.OrderItems">
+        <id property="id" column="o_id"/>
+        <result property="orderSn" column="o_sn"/>
+        <result property="pid" column="pid"/>
+        <result property="orderType" column="order_type"/>
+        <result property="state" column="state"/>
+        <result property="subState" column="substate"/>
+        <result property="gmtCreate" column="o_gmt_create"/>
+        <result property="gmtModified" column="o_gmt_modified"/>
+        <result property="confirmTime" column="confirm_time"/>
+        <result property="originPrice" column="origin_price"/>
+        <result property="discountPrice" column="discount_price"/>
+        <result property="freightPrice" column="freight_price"/>
+        <result property="rebateNum" column="rebate_num"/>
+        <result property="message" column="message"/>
+        <result property="regionId" column="region_id"/>
+        <result property="address" column="address"/>
+        <result property="mobile" column="mobile"/>
+        <result property="consignee" column="consignee"/>
+        <result property="couponId" column="coupon_id"/>
+        <result property="grouponId" column="groupon_id"/>
+        <result property="presaleId" column="presale_id"/>
+        <result property="shipmentSn" column="shipment_sn"/>
+        <collection property="lineItems" column="order_id" javaType="List" ofType="com.haruki.lab4.model.PO.OrderItemPO">
+            <id property="id" column="i_id"/>
+            <result property="orderId" column="i_order_id"/>
+            <result property="goodsSkuId" column="sku_id"/>
+            <result property="name" column="name"/>
+            <result property="quantity" column="quantity"/>
+            <result property="price" column="price"/>
+            <result property="discount" column="discount"/>
+            <result property="beShareId" column="be_share_id"/>
+            <result property="couponActivity" column="i.coupon_activity_id"/>
+        </collection>
+    </resultMap>
+
+<!--    ??sql??????-->
+    <select id="relationQueryOrderItemById" resultMap="OrderItems">
+        select
+            o.id                as o_id,
+            o.order_sn          as o_sn,
+            pid,
+            order_type,
+            state,
+            substate,
+            o.gmt_create as o_gmt_create,
+            o.gmt_modified as o_gmt_modified,
+            confirm_time,
+            origin_price,
+            discount_price,
+            freight_price,
+            rebate_num,
+            message,
+            region_id,
+            address,
+            mobile,
+            consignee,
+            coupon_id,
+            groupon_id,
+            presale_id,
+            shipment_sn,
+            i.id as i_id,
+            goods_sku_id as sku_id,
+            order_id as i_order_id,
+            name,
+            quantity,
+            price,
+            discount,
+            i.coupon_activity_id,
+            be_share_id
+        from orders as o left join order_item as i on o.id=i.order_id
+        where o.id=#{id}
+    </select>
+
+
+<!--    ??mybatis??select??????-->
+    <resultMap id="MybatisEmbedSelectQueryOrderItems" type="com.haruki.lab4.model.PO.OrderWithItemsPO" >
+        <collection property="lineItems" column="id" javaType="List" ofType="com.haruki.lab4.model.PO.OrderItemPO" select="queryOrderLineItemByOrderId"/>
+    </resultMap>
+
+    <select id="mybatisEmbedSelection" resultMap="MybatisEmbedSelectQueryOrderItems">
+        select *
+        from orders
+        where id=#{id}
+    </select>
+</mapper>

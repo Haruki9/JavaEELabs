@@ -59,4 +59,15 @@ public class OrderController {
         }
         return retObject;
     }
+
+    @GetMapping(value = "/items/{id}")
+    public ReturnObject getItems(@PathVariable("id") Integer id){
+        ReturnObject retObject=orderService.queryOrderItemsByOrderId(id);
+        switch (retObject.getCode()){
+            case OK:httpServletResponse.setStatus(HttpServletResponse.SC_OK);retObject.setMessage("DAO逻辑组合返回查询结果");break;
+            case ORDER_NOTEXICT:httpServletResponse.setStatus(HttpServletResponse.SC_NOT_FOUND );retObject.setMessage("DAO方式返回查询结果失败");break;
+            default:httpServletResponse.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+        }
+        return retObject;
+    }
 }

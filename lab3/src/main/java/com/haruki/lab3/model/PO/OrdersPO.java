@@ -1,6 +1,4 @@
 package com.haruki.lab3.model.PO;
-
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.apache.ibatis.type.Alias;
 import java.util.Date;

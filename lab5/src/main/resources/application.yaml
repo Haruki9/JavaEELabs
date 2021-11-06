@@ -1,0 +1,32 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/JavaEELabs?serverTimezone=GMT%2B8
+    username: root
+    password: 123456
+    type: com.mysql.cj.jdbc.MysqlConnectionPoolDataSource
+    hikari:
+      max-lifetime: 600000
+      minimum-idle: 3
+      maximum-pool-size: 400
+      connection-timeout: 30000
+
+server:
+  tomcat:
+    threads:
+      max: 500
+  port: 8080
+
+
+mybatis:
+  type-aliases-package: com.haruki.lab5.model
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+
+rocketmq:
+  name-server: localhost:9876
+  producer:
+    group: lab5-order-mq
+    max-message-size: 4096
+    retry-times-when-send-failed: 3

@@ -86,4 +86,16 @@ public class OrderService {
         }
         return returnObject;
     }
+
+    public ReturnObject queryOrderItemsByOrderId(int id){
+        ReturnObject returnObject;
+        List<OrderItemPO> lineItems=orderDao.getOrderLineItemByOrderId(id);
+        if (lineItems==null){
+            returnObject=new ReturnObject(ResponseCode.ORDER_NOTEXICT,"订单不存在");
+        }
+        else {
+            returnObject=new ReturnObject(ResponseCode.OK,"订单明细查询成功",lineItems);
+        }
+        return returnObject;
+    }
 }
